@@ -45,6 +45,12 @@ jobs:
           npm run format-check
           echo "Format check complete."
 
+      - name: Unit tests
+        run: |
+          echo "Running unit tests..."
+          npm run test
+          echo "Unit tests complete."
+
       - name: Test apply patches
         run: |
           set -e
