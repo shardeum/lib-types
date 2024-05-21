@@ -213,7 +213,7 @@ describe('safeStringify', () => {
 
   it('stringifies nested arrays of BigInt values', () => {
     const nestedBigIntArray = [BigInt(123), [BigInt(456), [BigInt(789), BigInt(101112)]], BigInt(131415)]
-    let input = safeStringify({ nestedBigIntArray })
+    const input = safeStringify({ nestedBigIntArray })
     expect(input).toBe(
       '{"nestedBigIntArray":[{"dataType":"bi","value":"7b"},[{"dataType":"bi","value":"1c8"},[{"dataType":"bi","value":"315"},{"dataType":"bi","value":"18af8"}]],{"dataType":"bi","value":"20157"}]}'
     )
@@ -278,7 +278,7 @@ describe('safeJsonParse', function () {
     ['date string', '"2023-05-16T09:00:00Z"', '2023-05-16T09:00:00Z'],
     ['object with null', '{"a": null}', { a: null }],
     ['object with BigInt', '{"dataType":"bi","value":"64"}', BigInt(100)],
-    ['object with Buffer', '{"value":"aGVsbG8=","dataType":"b64"}', Uint8Array.from(Buffer.from('hello'))],
+    ['object with Buffer', '{"value":"aGVsbG8=","dataType":"b64"}', Buffer.from('hello')],
   ])('parses valid JSON string: %s', (_, value, expected) => {
     expect(safeJsonParse(value)).toEqual(expected)
   })
@@ -290,7 +290,7 @@ describe('safeJsonParse', function () {
       bigint: BigInt(100),
     }
     expect(safeJsonParse(safeStringify(obj))).toEqual({
-      buf: Uint8Array.from(buffer),
+      buf: buffer,
       bigint: BigInt(100),
     })
   })

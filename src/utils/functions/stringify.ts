@@ -190,9 +190,7 @@ function typeReviver(key: string, value: any): any {
     originalObject.dataType
   ) {
     if (originalObject.dataType === 'b64') {
-      // buffers are converted to uint8arrays due to the existing behavior of JSON.parse
-      // Uint8Array is compatible with Buffer and it the expected type in the codebase post-parsing
-      return new Uint8Array(getBufferFromField(originalObject, 'base64'))
+      return getBufferFromField(originalObject, 'base64')
     } else if (originalObject.dataType === 'bi') {
       return BigInt('0x' + originalObject.value)
     } else {
