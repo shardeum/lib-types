@@ -19,6 +19,8 @@ on:
           - main
 jobs:
   ci:
+    runs-on: ubuntu-latest
+    steps:
     - name: Run CI for dev
       if: ${{ github.event.inputs.workflowBranch == 'dev' }}
       uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@dev
