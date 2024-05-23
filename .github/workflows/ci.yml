@@ -18,13 +18,10 @@ on:
           - dev
           - main
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run CI for dev
-      if: ${{ github.event.inputs.workflowBranch == 'dev' }}
-      uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@dev
+  ci-dev:
+    if: ${{ github.event.inputs.workflowBranch == 'dev' }}
+    uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@dev
 
-    - name: Run CI for main
-      if: ${{ github.event.inputs.workflowBranch == 'main' || !github.event.inputs.workflowBranch }}
-      uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@main
+  ci-main:
+    if: ${{ github.event.inputs.workflowBranch == 'main' || !github.event.inputs.workflowBranch }}
+    uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@main
