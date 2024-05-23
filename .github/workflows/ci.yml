@@ -18,10 +18,11 @@ on:
           - dev
           - main
 jobs:
-  ci-dev:
-    if: ${{ github.event.inputs.workflowBranch == 'dev' }}
-    uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@dev
+  ci:
+    - name: Run CI for dev
+      if: ${{ github.event.inputs.workflowBranch == 'dev' }}
+      uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@dev
 
-  ci-main:
-    if: ${{ github.event.inputs.workflowBranch == 'main' }}
-    uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@main
+    - name: Run CI for main
+      if: ${{ github.event.inputs.workflowBranch == 'main' || !github.event.inputs.workflowBranch }}
+      uses: shardeum/github-automation/.github/workflows/node-ci-shared.yml@main
