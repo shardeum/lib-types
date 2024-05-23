@@ -221,7 +221,7 @@ describe('safeStringify', () => {
 
   it('stringifies buffers', () => {
     expect(safeStringify({ buff: Buffer.from('hello') })).toBe(
-      '{"buff":{"value":"aGVsbG8=","dataType":"b64"}}'
+      '{"buff":{"value":"aGVsbG8=","dataType":"bb"}}'
     )
   })
 })
@@ -278,7 +278,7 @@ describe('safeJsonParse', function () {
     ['date string', '"2023-05-16T09:00:00Z"', '2023-05-16T09:00:00Z'],
     ['object with null', '{"a": null}', { a: null }],
     ['object with BigInt', '{"dataType":"bi","value":"64"}', BigInt(100)],
-    ['object with Buffer', '{"value":"aGVsbG8=","dataType":"b64"}', Buffer.from('hello')],
+    ['object with Buffer', '{"value":"aGVsbG8=","dataType":"bb"}', Buffer.from('hello')],
   ])('parses valid JSON string: %s', (_, value, expected) => {
     expect(safeJsonParse(value)).toEqual(expected)
   })

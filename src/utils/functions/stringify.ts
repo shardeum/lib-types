@@ -1,3 +1,5 @@
+import { isUint8Array } from 'util/types'
+
 const objToString = Object.prototype.toString
 
 const objKeys =
@@ -63,10 +65,6 @@ function isBufferValue(toStr: unknown, val: Record<string, unknown>): boolean {
   )
 }
 
-function isUnit8Array(value: unknown): boolean {
-  return value instanceof Uint8Array
-}
-
 /**
  * Converts a value to its string representation.
  *
@@ -89,9 +87,6 @@ function stringifyHelper(
   if (val === false) {
     return 'false'
   }
-  if (isUnit8Array(val)) {
-    val = Buffer.from(val)
-  }
   switch (typeof val) {
     case 'object':
       if (val === null) {
@@ -112,6 +107,11 @@ function stringifyHelper(
             str += stringifyHelper((val as unknown[])[i], true)
           }
           return str + ']'
+        } else if (isUint8Array(val)) {
+          return JSON.stringify({
+            value: Buffer.from(val).toString('base64'),
+            dataType: 'u8ab',
+          })
         } else if (
           options.bufferEncoding !== 'none' &&
           isBufferValue(toStr, val as Record<string, unknown>)
@@ -120,7 +120,7 @@ function stringifyHelper(
             case 'base64':
               return JSON.stringify({
                 value: Buffer.from(val['data']).toString('base64'),
-                dataType: 'b64',
+                dataType: 'bb',
               })
           }
         } else if (toStr === '[object Object]') {
@@ -189,8 +189,10 @@ function typeReviver(key: string, value: any): any {
     Object.prototype.hasOwnProperty.call(originalObject, 'dataType') &&
     originalObject.dataType
   ) {
-    if (originalObject.dataType === 'b64') {
+    if (originalObject.dataType === 'bb') {
       return getBufferFromField(originalObject, 'base64')
+    } else if (originalObject.dataType === 'u8ab') {
+      return Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
     } else if (originalObject.dataType === 'bi') {
       return BigInt('0x' + originalObject.value)
     } else {
