@@ -181,7 +181,7 @@ function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
  * @returns The revived value, or the original value if no revival is needed.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function typeReviver(key: string, value: any): any {
+export function typeReviver(key: string, value: any): any {
   if (key === 'sig') return value
   const originalObject = value
   if (

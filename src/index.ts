@@ -62,5 +62,6 @@ export namespace StateManager {
 export namespace Utils {
   export import safeStringify = Utils_.safeStringify
   export import safeJsonParse = Utils_.safeJsonParse
+  export import typeReviver = Utils_.typeReviver
   export import stringifyOptions = Utils_.stringifyOptions
 }
