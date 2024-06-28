@@ -1,4 +1,6 @@
-export type ReceiptMap = {[txId: string]: string[]};
+import * as Types from '../p2p/P2PTypes'
+
+export type ReceiptMap = { [txId: string]: string[] };
 
 export type ReceiptMapResult = {
   cycle: number;
@@ -36,3 +38,28 @@ export type StatsClump = {
   coveredParititionCount: number;
   skippedParitionCount: number;
 };
+
+export type Proposal = {
+  txid: string;
+  applied: boolean;
+  cantPreApply: boolean;
+  accountIds: string[];
+  beforeStateHashes: string[];
+  afterStateHashes: string[];
+  appDataHash: string;
+}
+
+export type ProposalVote = {
+  proposalHash: string;
+  sign: Types.Signature;
+}
+
+export type SignedReceipt = {
+  proposal: Proposal;
+  proposalHash: string;
+  signPack: {
+    type: "simple";
+    signatures: Types.Signature[];
+  }
+  signPackSerialized: Buffer;
+}
