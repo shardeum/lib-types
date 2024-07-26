@@ -6,7 +6,7 @@ export interface Txs {
 export interface ServiceEntry {
   publicKey: publicKey
   startCycle: number
-  endCycle: number
+  endCycle?: number
   rewardRate: number
 }
 
