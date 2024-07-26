@@ -3,7 +3,7 @@ import {publicKey} from "../index";
 export interface Txs {
 }
 
-export interface ValidationTime {
+export interface ServiceEntry {
   publicKey: publicKey
   startCycle: number
   endCycle: number
@@ -11,5 +11,5 @@ export interface ValidationTime {
 }
 
 export interface Record {
-  serviceQueue: ValidationTime[]
+  serviceQueue: ServiceEntry[]
 }
