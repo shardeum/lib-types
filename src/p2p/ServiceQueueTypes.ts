@@ -11,6 +11,7 @@ export interface AddNetworkTx<T = any> {
   txData: T
   cycle: number // cycle the tx was added
   priority: number // priority in the txList (0 is lowest), second only to cycle
+  involvedAddress: string
   subQueueKey?: string
 }
 
