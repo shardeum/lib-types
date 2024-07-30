@@ -1,13 +1,19 @@
 export interface Txs {
 }
 
-export interface NetworkTx {
+export interface AddNetworkTx {
   type: string
   txData: any // todo: better type here?
+  cycle: number // cycle the tx was added
+}
+
+export interface RemoveNetworkTx {
+  txHash: string
+  cycle: number // cycle the tx was added
 }
 
 export interface Record {
-  txadd: NetworkTx[]
-  txremove: string[]
+  txadd: AddNetworkTx[]
+  txremove: RemoveNetworkTx[]
   txlisthash: string
 }
