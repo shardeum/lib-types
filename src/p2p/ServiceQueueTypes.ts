@@ -9,6 +9,7 @@ export interface AddNetworkTx {
   type: string
   txData: any // todo: better type here?
   cycle: number // cycle the tx was added
+  subQueueKey?: string
 }
 
 export interface RemoveNetworkTx {
