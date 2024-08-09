@@ -6,6 +6,7 @@ export interface Txs {
 }
 
 export interface AddNetworkTx {
+  hash: string
   type: string
   txData: any // todo: better type here?
   cycle: number // cycle the tx was added
