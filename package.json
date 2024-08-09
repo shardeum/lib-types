@@ -20,8 +20,8 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "format-check": "prettier --check './src/**/*.ts'",
-    "format-fix": "prettier --write './src/**/*.ts'"
+    "format-check": "prettier --check \"./src/**/*.ts\"",
+    "format-fix": "prettier --write \"./src/**/*.ts\""
   },
   "repository": {
     "type": "git",
