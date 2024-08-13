@@ -5,10 +5,10 @@ export interface Txs {
   txremove: RemoveNetworkTx[]
 }
 
-export interface AddNetworkTx {
+export interface AddNetworkTx<T = any> {
   hash: string
   type: string
-  txData: any // todo: better type here?
+  txData: T
   cycle: number // cycle the tx was added
   subQueueKey?: string
 }
