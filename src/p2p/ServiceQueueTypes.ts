@@ -10,6 +10,7 @@ export interface AddNetworkTx<T = any> {
   type: string
   txData: T
   cycle: number // cycle the tx was added
+  involvedAddress: string
   subQueueKey?: string
 }
 
