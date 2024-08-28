@@ -24,3 +24,5 @@ export interface Tracker {
 export type TxHash = string
 
 export type SignedSetGlobalTx = SetGlobalTx & SignedObject
+
+export type GlobalTxReceipt = Omit<Receipt, 'consensusGroup'>
