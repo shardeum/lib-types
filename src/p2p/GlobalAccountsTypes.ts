@@ -4,6 +4,7 @@ import { NodeInfo, Signature, SignedObject } from './P2PTypes'
 
 export interface SetGlobalTx {
   address: string
+  addressHash: string // the current state hash of the address
   value: unknown
   when: number
   source: string
