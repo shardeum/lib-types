@@ -1,5 +1,5 @@
 {
-  "name": "@shardus/types",
+  "name": "@shardeum-foundation/types",
   "version": "1.2.21",
   "description": "",
   "main": "build/src/index.js",
@@ -34,9 +34,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/shardus/shardus-types/issues"
+    "url": "https://gitlab.com/shardeum/lib-types/issues"
   },
-  "homepage": "https://gitlab.com/shardus/shardus-types#readme",
+  "homepage": "https://gitlab.com/shardeum/lib-types#readme",
   "devDependencies": {
     "@types/node": "18.16.1",
     "np": "9.2.0",
