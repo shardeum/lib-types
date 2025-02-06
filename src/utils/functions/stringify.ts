@@ -118,10 +118,11 @@ function stringifyHelper(
         ) {
           switch (options.bufferEncoding) {
             case 'base64':
-              return JSON.stringify({
-                value: Buffer.from(val['data']).toString('base64'),
-                dataType: 'bb',
-              })
+              if (val['data']['length'] < 1000)
+                return JSON.stringify({
+                  value: Buffer.from(val['data']).toString('base64'),
+                  dataType: 'bb',
+                })
           }
         } else if (toStr === '[object Object]') {
           keys = objKeys(val).sort()
