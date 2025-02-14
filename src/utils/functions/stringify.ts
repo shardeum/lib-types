@@ -61,7 +61,8 @@ function isBufferValue(toStr: unknown, val: Record<string, unknown>): boolean {
     toStr === '[object Object]' &&
     objKeys(val).length === 2 &&
     objKeys(val).includes('type') &&
-    val['type'] === 'Buffer'
+    val['type'] === 'Buffer' && 
+    typeof val.data !== 'object' // avoid Buffer.from({type: 'Buffer', data: {0: 1, 1:1, 2:2, length:4294967295}) vulnerability
   )
 }
 
@@ -165,11 +166,12 @@ function stringifyHelper(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
-  switch (encoding) {
-    case 'base64':
-      return Buffer.from(input.value, 'base64')
-    default:
-      return Buffer.from(input)
+  if (encoding === 'base64' && typeof input.value !== 'object') {
+    return Buffer.from(input.value, 'base64')
+  } else if (typeof input.value !== 'object') {
+    return Buffer.from(input)
+  } else {
+    return input
   }
 }
 
@@ -182,6 +184,9 @@ function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function typeReviver(key: string, value: any): any {
+  if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+    return undefined;
+  }
   if (key === 'sig') return value
   const originalObject = value
   if (
@@ -193,9 +198,13 @@ export function typeReviver(key: string, value: any): any {
       if (typeof originalObject.value !== 'string') {
         return value
       }
-      return originalObject.dataType === 'bb'
-        ? getBufferFromField(originalObject, 'base64')
-        : Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
+      if (originalObject.dataType === 'bb') {
+        return getBufferFromField(originalObject, 'base64')
+      } else if (typeof originalObject.value !== 'object') {
+        return Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
+      } else {
+        return originalObject.value
+      }
     } else if (originalObject.dataType === 'bi') {
       return BigInt('0x' + originalObject.value)
     } else {
