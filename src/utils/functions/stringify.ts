@@ -61,8 +61,27 @@ function isBufferValue(toStr: unknown, val: Record<string, unknown>): boolean {
     toStr === '[object Object]' &&
     objKeys(val).length === 2 &&
     objKeys(val).includes('type') &&
-    val['type'] === 'Buffer' && 
-    typeof val.data !== 'object' // avoid Buffer.from({type: 'Buffer', data: {0: 1, 1:1, 2:2, length:4294967295}) vulnerability
+    val['type'] === 'Buffer' &&
+    isSafeForBuffer(val.data)
+  )
+}
+
+function isSafeForBuffer(val: unknown): boolean {
+  // avoid Buffer.from({type: 'Buffer', data: {0: 1, 1:1, 2:2, length:4294967295}) vulnerability
+  return (
+    typeof val === 'string' ||
+    Array.isArray(val) ||
+    Buffer.isBuffer(val) ||
+    val instanceof Uint8Array ||
+    val instanceof Int8Array ||
+    val instanceof Uint16Array ||
+    val instanceof Int16Array ||
+    val instanceof Uint32Array ||
+    val instanceof Int32Array ||
+    val instanceof Float32Array ||
+    val instanceof Float64Array ||
+    val instanceof BigInt64Array ||
+    val instanceof BigUint64Array
   )
 }
 
@@ -166,9 +185,9 @@ function stringifyHelper(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
-  if (encoding === 'base64' && typeof input.value !== 'object') {
+  if (encoding === 'base64' && isSafeForBuffer(input.value)) {
     return Buffer.from(input.value, 'base64')
-  } else if (typeof input !== 'object') {
+  } else if (isSafeForBuffer(input)) {
     return Buffer.from(input)
   } else {
     return input
@@ -185,7 +204,7 @@ function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function typeReviver(key: string, value: any): any {
   if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
-    return undefined;
+    return undefined
   }
   if (key === 'sig') return value
   const originalObject = value
@@ -200,7 +219,7 @@ export function typeReviver(key: string, value: any): any {
       }
       if (originalObject.dataType === 'bb') {
         return getBufferFromField(originalObject, 'base64')
-      } else if (typeof originalObject.value !== 'object') {
+      } else if (isSafeForBuffer(originalObject.value)) {
         return Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
       } else {
         return originalObject.value
