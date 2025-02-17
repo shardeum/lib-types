@@ -168,7 +168,7 @@ function stringifyHelper(
 function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
   if (encoding === 'base64' && typeof input.value !== 'object') {
     return Buffer.from(input.value, 'base64')
-  } else if (typeof input.value !== 'object') {
+  } else if (typeof input !== 'object') {
     return Buffer.from(input)
   } else {
     return input
