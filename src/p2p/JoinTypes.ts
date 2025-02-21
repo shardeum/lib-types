@@ -12,6 +12,7 @@ export interface JoinedConsensor extends Types.P2PNode {
   cycleJoined: CycleCreator.CycleMarker
   counterRefreshed: CycleCreator.CycleRecord['counter']
   id: string
+  foundationNode?: boolean
 }
 
 export interface JoinRequest {
@@ -24,10 +25,10 @@ export interface JoinRequest {
   appJoinData?: any //Required for golden ticket feature
 }
 
-export interface SyncStarted {
+export interface StartedSyncingRequest {
   nodeId: string //pub key of the standby node
-  cycleNumber: number //a recent cycle 
-  sign?: Types.Signature //sig of standby node 
+  cycleNumber: number //a recent cycle
+  sign?: Types.Signature //sig of standby node
 }
 
 export interface FinishedSyncingRequest {
@@ -36,14 +37,25 @@ export interface FinishedSyncingRequest {
   sign?: Types.Signature //sig of synced node
 }
 
-export interface KeepInStandby {
+export interface StandbyRefreshRequest {
   publicKey: string //pub key of the standby node
   cycleNumber: number //a recent cycle
-  sign?: Types.Signature //sig of standby node 
+  sign?: Types.Signature //sig of standby node
 }
 
+export interface UnjoinRequest {
+  publicKey: string //pub key of the standby node
+  cycleNumber: number //a recent cycle
+}
+
+export type SignedUnjoinRequest = UnjoinRequest & Types.SignedObject
+
 export interface Txs {
-  join: JoinRequest[]
+  standbyAdd: JoinRequest[]
+  startedSyncing: StartedSyncingRequest[]
+  finishedSyncing: FinishedSyncingRequest[]
+  standbyRefresh: StandbyRefreshRequest[]
+  standbyRemove: SignedUnjoinRequest[]
 }
 
 export interface Record {

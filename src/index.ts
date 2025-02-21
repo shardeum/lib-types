@@ -21,13 +21,15 @@ import * as shardFunctionTypes_ from './state-manager/shardFunctionTypes'
 import * as StateManagerTypes_ from './state-manager/StateManagerTypes'
 import * as StateMetaDataTypes_ from './state-manager/StateMetaDataTypes'
 import * as ModesTypes_ from './p2p/ModesTypes'
+import * as ServiceQueueTypes_ from './p2p/ServiceQueueTypes'
+import * as Utils_ from './utils/functions/stringify'
 
-export type hexstring = string;
-export type publicKey = hexstring;
-export type secretKey = hexstring;
-export type curvePublicKey = hexstring;
-export type curveSecretKey = hexstring;
-export type sharedKey = hexstring;
+export type hexstring = string
+export type publicKey = hexstring
+export type secretKey = hexstring
+export type curvePublicKey = hexstring
+export type curveSecretKey = hexstring
+export type sharedKey = hexstring
 
 export namespace P2P {
   export import ActiveTypes = ActiveTypes_
@@ -50,10 +52,18 @@ export namespace P2P {
   export import SyncTypes = SyncTypes_
   export import TemplateTypes = TemplateTypes_
   export import ModesTypes = ModesTypes_
+  export import ServiceQueueTypes = ServiceQueueTypes_
 }
 
 export namespace StateManager {
   export import shardFunctionTypes = shardFunctionTypes_
   export import StateManagerTypes = StateManagerTypes_
   export import StateMetaDataTypes = StateMetaDataTypes_
+}
+
+export namespace Utils {
+  export import safeStringify = Utils_.safeStringify
+  export import safeJsonParse = Utils_.safeJsonParse
+  export import typeReviver = Utils_.typeReviver
+  export import stringifyOptions = Utils_.stringifyOptions
 }

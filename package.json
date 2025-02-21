@@ -1,6 +1,6 @@
 {
-  "name": "@shardus/types",
-  "version": "1.2.11",
+  "name": "@shardeum-foundation/lib-types",
+  "version": "1.2.24-prerelease.1",
   "description": "",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
@@ -9,20 +9,26 @@
     "src/**/*"
   ],
   "scripts": {
-    "release": "np --any-branch --no-cleanup --no-tests --no-yarn",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "gts lint",
+    "test": "jest",
+    "coverage": "npm test -- --coverage",
+    "lint": "eslint \"./src/**/*.ts\"",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
+    "build": "npm run compile",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "format-check": "prettier --check './src/**/*.ts'"
+    "format-check": "prettier --check \"./src/**/*.ts\"",
+    "format-fix": "prettier --write \"./src/**/*.ts\"",
+    "release:prerelease": "npm run prepare && npm version prerelease --preid=prerelease && git push --follow-tags && npm publish --tag prerelease",
+    "release:patch": "npm run prepare && npm version patch && git push --follow-tags && npm publish",
+    "release:minor": "npm run prepare && npm version minor && git push --follow-tags && npm publish",
+    "release:major": "npm run prepare && npm version major && git push --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/shardus/shardus-types.git"
+    "url": "https://github.com/shardeum/lib-types.git"
   },
   "publishConfig": {
     "access": "public"
@@ -35,11 +41,23 @@
   },
   "homepage": "https://gitlab.com/shardus/shardus-types#readme",
   "devDependencies": {
-    "@types/node": "18.16.1",
-    "gts": "3.1.1",
+    "@types/node": "18.19.1",
     "np": "9.2.0",
     "prettier": "2.8.8",
-    "typescript": "4.4.4"
+    "typescript": "4.4.4",
+    "gts": "3.1.1",
+    "eslint": "8.31.0",
+    "@typescript-eslint/eslint-plugin": "5.48.0",
+    "@typescript-eslint/parser": "5.48.0",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-plugin-no-unsanitized": "4.0.2",
+    "eslint-plugin-security": "1.5.0",
+    "eslint-plugin-xss": "0.1.12",
+    "typescript-eslint": "0.0.1-alpha.0",
+    "ts-jest": "27.0.5",
+    "@types/jest": "27.0.1",
+    "jest": "27.1.1",
+    "fast-stable-stringify": "1.0.0"
   },
   "overrides": {
     "got": "11.8.5"
