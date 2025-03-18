@@ -24,7 +24,7 @@ import * as ModesTypes_ from './p2p/ModesTypes'
 import * as ServiceQueueTypes_ from './p2p/ServiceQueueTypes'
 import * as Utils_ from './utils/functions/stringify'
 
-export type hexstring = string
+export type hexstring = string;
 export type publicKey = hexstring
 export type secretKey = hexstring
 export type curvePublicKey = hexstring
