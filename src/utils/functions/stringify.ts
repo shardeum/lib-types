@@ -20,7 +20,7 @@ const isObject = (val: unknown): boolean => {
     return false
   }
   return typeof val === 'function' || typeof val === 'object'
-}
+};
 
 /**
  * Safely converts a value to a string representation.
