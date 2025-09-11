@@ -364,7 +364,7 @@ describe('safeJsonParse', function () {
 
   it('throws an error for invalid JSON with unsupported structure', () => {
     const invalidStructureJson = '{"foo": [1, 2, {"dataType": "bi", "value": "invalid"}]}'
-    expect(() => safeJsonParse(invalidStructureJson)).toThrowError()
+    expect(() => safeJsonParse(invalidStructureJson)).toThrow()
   })
 
   it('complex nested object test', () => {
